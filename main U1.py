@@ -6,14 +6,14 @@ import sys                                                          # U3 - Bibli
 # Altere os valores abaixo livremente para ver o impacto visual no jogo
 # ########################################################################################################
 
-#------------------------------------------------------------------
+#--------------------------------------------------------------------
 # Configurações de tamanho da janela (Tipos Numéricos: Inteiros)
 #------------------------------------------------------------------
 LARGURA_JANELA = 500                                                # U1 - Variáveis e atribuições: definindo a largura da tela
 ALTURA_JANELA = 600                                                 # U1 - Variáveis e atribuições: definindo a altura da tela
 
 
-#---------------------------------------------------------------------------------
+#-----------------------------------------------------------------------------------
 # Configurações da grade do tabuleiro (Expressões Aritméticas e Variáveis)
 #---------------------------------------------------------------------------------
 TAMANHO_GRADE = 4                                                   # U1 - Variáveis e atribuições: quantidade de linhas e colunas
@@ -22,7 +22,7 @@ BORDA_CELULA = 10                                                   # U1 - Vari�
 MARGEM_TOPO = 100                                                   # U1 - Variáveis e atribuições: espaço para o título no topo
 
 
-#---------------------------------------------------------------------------------------------------
+#-----------------------------------------------------------------------------------------------------
 # Definição de Cores no formato RGB (Modifique os números de 0 a 255)
 # OBS: O formato (R, G, B) é uma Tupla (Unidade II), mas tratada aqui como valor de atribuição.
 #---------------------------------------------------------------------------------------------------
@@ -31,21 +31,64 @@ COR_DO_TEXTO = (119, 110, 101)                                      # U1 - Vari�
 TEXT0_CLARO = (249, 246, 242)                                       # U1 - Variáveis e atribuições: cor dos números altos
 
 
-#---------------------------------------------
+#-----------------------------------------------
 # Texto do Título (Tipo de Dado: String)
 #---------------------------------------------
 NOME_DO_JOGO = "2048 - Edição U1"                                   # U1 - Tipos de dados: strings; U1 - Variáveis e atribuições
 
 
-#------------------------------------------------------------------
-# O TABULEIRO INICIAL ESTÁTICO
-#------------------------------------------------------------------
+#--------------------------------
+# O TABULEIRO PADRÃO ESTÁTICO
+#------------------------------
 TABULEIRO_TESTE = [                                                 # U1 - Tipos de dados: listas; U1 - Variáveis e atribuições
-    [2, 4, 0, 0],                                                   # U1 - Tipos de dados: números
-    [0, 8, 16, 0],                                                  # U1 - Tipos de dados: números
-    [0, 0, 32, 64],                                                 # U1 - Tipos de dados: números
-    [0, 0, 0, 128]                                                  # U1 - Tipos de dados: números
+    [2, 4, 8, 16],                                                   # U1 - Tipos de dados: números
+    [4, 16, 32, 64],                                                  # U1 - Tipos de dados: números
+    [8, 32, 64, 128],                                                 # U1 - Tipos de dados: números
+    [16, 64, 128, 256]                                                  # U1 - Tipos de dados: números
 ]
+
+#----------------------------------------------------------------------------------
+# ENTRADA, SAÍDA E ESTRUTURAS DE CONTROLE ATIVAS (INTERAÇÃO NO TERMINAL)
+# Interação de entrada e saída no terminal para personalizar o tabuleiro inicial
+#---------------------------------------------------------------------------------
+print("==================================================")         # U1 - Entrada e saída: exibindo mensagem de boas-vindas no terminal
+print("SISTEMA DE CONFIGURAÇÃO DO 2048 - MODO UNIDADE I")           # U1 - Entrada e saída: exibindo interface textual
+print("==================================================")         # U1 - Entrada e saída: exibindo linha divisória
+
+#------------------------------------------------------------
+# Recebendo dados (Entrada e Saída) e manipulando Strings
+#----------------------------------------------------------
+NOME_JOGADOR = input("Digite o nome do jogador: ")                  # U1 - Entrada e saída: recebendo texto do usuário; U1 - Variáveis e atribuições
+NOME_DO_JOGO = "2048 - Jogador: " + NOME_JOGADOR                    # U1 - Tipos de dados: strings; U1 - Variáveis e atribuições: criando uma string
+
+#-------------------------------------------------------------
+# Exibindo menu de opções no terminal para a lógica do jogo
+#-----------------------------------------------------------
+print("Selecione o layout inicial do seu tabuleiro:")               # U1 - Entrada e saída: instruindo o usuário
+print("1 - Configuração Clássica (Peças Iniciais Comuns)")          # U1 - Entrada e saída
+print("2 - Configuração Avançada (Peças de Valores Altos)")         # U1 - Entrada e saída
+OPCAO = input("Digite 1 ou 2: ")                                    # U1 - Entrada e saída; U1 - Variáveis e atribuições
+
+#-----------------------------------------------------------------------------------------
+# Utilizando as Estruturas de Controle (if-elif-else) para definir o tabuleiro inicial
+#---------------------------------------------------------------------------------------
+if OPCAO == "1":                                                    # U1 - Estruturas de controle: if-elif-else: testando a primeira opção
+    TABULEIRO_TESTE = [                                             # U1 - Tipos de dados: listas; U1 - Variáveis e atribuições
+        [2, 4, 0, 0],                                               # U1 - Altere os números (0, 2, 4, 8, 16, 32...) para testar
+        [0, 8, 16, 0],                                              # U1 - O número 0 represents uma célula vazia.
+        [0, 0, 32, 64],                                             # U1 - Experimente colocar valores diferentes aqui.
+        [0, 0, 0, 128]                                              # U1 - Valores numéricos inteiros.
+    ]
+elif OPCAO == "2":                                                  # U1 - Estruturas de controle: if-elif-else: testando a segunda opção
+    TABULEIRO_TESTE = [                                             # U1 - Tipos de dados: listas; U1 - Variáveis e atribuições
+        [128, 256, 0, 0],                                           # U1 - Tipos de dados: números
+        [0, 512, 1024, 0],                                          # U1 - Tipos de dados: números
+        [0, 0, 2048, 0],                                            # U1 - Tipos de dados: números
+        [0, 0, 0, 0]                                                # U1 - Tipos de dados: números
+    ]
+else:                                                               # U1 - Estruturas de controle: if-elif-else: tratando entrada inválida
+    print("Opção inválida! Utilizando tabuleiro padrão.")           # U1 - Entrada e saída: exibindo alerta de erro
+
 
 
 ##############################################################################################
@@ -54,7 +97,7 @@ TABULEIRO_TESTE = [                                                 # U1 - Tipos
 # Ela serve apenas para processar e desenhar as variáveis que foram definidas acima.
 ##############################################################################################
 
-#------------------------------------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------------------------------------
 # Dicionário que mapeia os valores das peças para suas cores correspondentes, com um valor padrão para peças maiores que 2048 
 #------------------------------------------------------------------------------------------------------------------------------
 CORES_CELULAS = {                                                   # U2 - Estruturas de dados: dicionários: mapeando valores para cores
@@ -75,14 +118,14 @@ CORES_CELULAS = {                                                   # U2 - Estru
 pygame.init()                                                       # U3 - Estudo de caso (PyGame): inicializando todos os módulos do pygame
 
 
-#---------------------------------------------------------------------------------------------------------------------
+#-----------------------------------------------------------------------------------------------------------------------
 # Tamanhos das fontes dos números. Números maiores precisam ter uma fonte menor para caberem dentro da célula
 #---------------------------------------------------------------------------------------------------------------------
 FONTE_GRANDE = pygame.font.Font(None, 55)                           # U3 - Estudo de caso (PyGame): criando objeto de fonte
 FONTE_MEDIA = pygame.font.Font(None, 40)                            # U3 - Estudo de caso (PyGame): criando objeto de fonte
 FONTE_PEQUENA = pygame.font.Font(None, 30)                          # U3 - Estudo de caso (PyGame): criando objeto de fonte
 
-#---------------------------------------------------------------------------------
+#-----------------------------------------------------------------------------------
 # Criando a janela do jogo e o relógio para controlar a taxa de atualização
 #---------------------------------------------------------------------------------
 janela = pygame.display.set_mode((LARGURA_JANELA, ALTURA_JANELA))   # U3 - Estudo de caso (PyGame): criando janela gráfica
@@ -103,13 +146,13 @@ def desenhar_jogo():                                                # U3 - Funç
     titulo = FONTE_GRANDE.render(NOME_DO_JOGO, True, COR_DO_TEXTO)  # U3 - Estudo de caso (PyGame): renderizando texto; U1 - Strings
     janela.blit(titulo, (20, 20))                                   # U3 - Estudo de caso (PyGame): desenhando superfície na janela
     
-    #---------------------------------------------------------------
+    #-----------------------------------------------------------------
     # Calcula a posição do tabuleiro para centralizá-lo na tela
     #---------------------------------------------------------------
     tabuleiro_top = MARGEM_TOPO                                                                                       # U1 - Variáveis e atribuições
     tabuleiro_left = (LARGURA_JANELA - (TAMANHO_GRADE * TAMANHO_CELULA + (TAMANHO_GRADE - 1) * BORDA_CELULA)) // 2    # U1 - Expressões: calculando margem horizontal 
     
-    #------------------------------------------------------------------------------------------
+    #--------------------------------------------------------------------------------------------
     # Desenha o fundo do tabuleiro, criando um retângulo maior para dar um efeito de borda
     #------------------------------------------------------------------------------------------
     pygame.draw.rect(
@@ -123,7 +166,7 @@ def desenhar_jogo():                                                # U3 - Funç
          )
     )
     
-    #------------------------------------------------------------------------
+    #--------------------------------------------------------------------------
     # Desenha as peças do tabuleiro, iterando sobre cada célula
     # desenhando um retângulo com a cor correspondente ao valor da peça,
     # e desenhando o número da peça centralizado dentro do retângulo
@@ -134,7 +177,7 @@ def desenhar_jogo():                                                # U3 - Funç
             y = tabuleiro_top + i * (TAMANHO_CELULA + BORDA_CELULA)                                             # U1 - Variáveis e atribuições / Expressões: posição y da célula
             
 
-            #---------------------------------------------------------------------------------
+            #-----------------------------------------------------------------------------------
             # Condicionais para segurança caso o usuário coloque um valor fora da matriz
             #---------------------------------------------------------------------------------
             if i < len(TABULEIRO_TESTE) and j < len(TABULEIRO_TESTE[i]):                                        # U1 - Estruturas de controle: if com operadores lógicos e relacionais
@@ -143,20 +186,20 @@ def desenhar_jogo():                                                # U3 - Funç
                 valor = 0                                                                                       # U1 - Variáveis e atribuições
             
             
-            #------------------------------------------------------
+            #--------------------------------------------------------
             # Obtém a cor correspondente ao valor da peça,
             # usando o dicionário CORES_CELULAS 
             # (com um valor padrão para peças maiores que 2048)
             #------------------------------------------------------
             color = CORES_CELULAS.get(valor, CORES_CELULAS[2048])                                               # U2 - Estruturas de dados: dicionários: método .get()
             
-            #------------------------------------------------------
+            #--------------------------------------------------------
             # Desenha o retângulo da peça com a cor correspondente
             #------------------------------------------------------
             pygame.draw.rect(janela, color, (x, y, TAMANHO_CELULA, TAMANHO_CELULA))                             # U3 - Estudo de caso (PyGame): desenhando retângulo
 
             
-            #---------------------------------------------------------------
+            #-----------------------------------------------------------------
             # Se a peça não for vazia (valor diferente de 0), 
             # desenha o número da peça centralizado dentro do retângulo
             #---------------------------------------------------------------
@@ -172,23 +215,23 @@ def desenhar_jogo():                                                # U3 - Funç
                 janela.blit(texto, texto_rect)                                                                  # U3 - Estudo de caso (PyGame): desenhando texto na tela
 
     
-    #------------------------------------------------------
+    #--------------------------------------------------------
     # Exibe instruções na parte inferior da tela
     #------------------------------------------------------
     legenda = FONTE_PEQUENA.render("Modo U1 - Altere as variáveis no código", True, (150, 150, 150))            # U3 - Estudo de caso (PyGame): renderizando instrução; U1 - Strings
     
     
-    #---------------------------------------------
+    #-----------------------------------------------
     # Função que escreve as intruções na tela
     #---------------------------------------------
     janela.blit(legenda, (tabuleiro_left, ALTURA_JANELA - 40))                                                  # U3 - Estudo de caso (PyGame): desenhando legenda
     
-    #------------------------------------------------------
+    #--------------------------------------------------------
     # Atualiza a tela para mostrar as mudanças feitas
     #------------------------------------------------------
     pygame.display.flip()                                                                                       # U3 - Estudo de caso (PyGame): atualizando a janela (renderizando frame)
 
-#---------------------------------------------------------------------------------
+#-----------------------------------------------------------------------------------
 # Loop Principal Simplificado (Apenas mantém a janela aberta e atualiza o visual)
 #---------------------------------------------------------------------------------
 running = True                                                                                                  # U1 - Variáveis e atribuições; U1 - Tipos de dados: booleanos
