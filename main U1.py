@@ -1,4 +1,4 @@
-import pygame                                                       # U3 - Biblioteca externa: importando Pygame para visualização gráfica
+import pygame                                                       # U3 - Estudo de caso (PyGame): importando biblioteca externa de jogos
 import sys                                                          # U3 - Biblioteca padrão: importando módulo do sistema
 
 # ########################################################################################################
@@ -34,18 +34,17 @@ TEXT0_CLARO = (249, 246, 242)                                       # U1 - Vari�
 #---------------------------------------------
 # Texto do Título (Tipo de Dado: String)
 #---------------------------------------------
-NOME_DO_JOGO = "2048 - Edição U1"                                   # U1 - Variáveis e atribuições: criando uma string
+NOME_DO_JOGO = "2048 - Edição U1"                                   # U1 - Tipos de dados: strings; U1 - Variáveis e atribuições
 
 
 #------------------------------------------------------------------
 # O TABULEIRO INICIAL ESTÁTICO
-# OBS: Uma lista de listas é uma estrutura de dados (Unidade II).
 #------------------------------------------------------------------
-TABULEIRO_TESTE = [
-    [2, 4, 0, 0],                                                   # U1 - Altere os números (0, 2, 4, 8, 16, 32...) para testar
-    [0, 8, 16, 0],                                                  # U1 - O número 0 representa uma célula vazia.
-    [0, 0, 32, 64],                                                 # U1 - Experimente colocar valores diferentes aqui.
-    [0, 0, 0, 128]                                                  # U1 - Valores numéricos inteiros.
+TABULEIRO_TESTE = [                                                 # U1 - Tipos de dados: listas; U1 - Variáveis e atribuições
+    [2, 4, 0, 0],                                                   # U1 - Tipos de dados: números
+    [0, 8, 16, 0],                                                  # U1 - Tipos de dados: números
+    [0, 0, 32, 64],                                                 # U1 - Tipos de dados: números
+    [0, 0, 0, 128]                                                  # U1 - Tipos de dados: números
 ]
 
 
@@ -55,7 +54,26 @@ TABULEIRO_TESTE = [
 # Ela serve apenas para processar e desenhar as variáveis que foram definidas acima.
 ##############################################################################################
 
-pygame.init()                                                       # U3 - Estudo de caso (PyGame):Inicializando os módulos do Pygame
+#------------------------------------------------------------------------------------------------------------------------------
+# Dicionário que mapeia os valores das peças para suas cores correspondentes, com um valor padrão para peças maiores que 2048 
+#------------------------------------------------------------------------------------------------------------------------------
+CORES_CELULAS = {                                                   # U2 - Estruturas de dados: dicionários: mapeando valores para cores
+    0: (205, 192, 180),                                             # U2 - Dicionários: par chave(int)-valor(tupla); U2 - Tuplas
+    2: (238, 228, 218),                                             # U2 - Dicionários: par chave(int)-valor(tupla); U2 - Tuplas
+    4: (237, 224, 200),                                             # U2 - Dicionários: par chave(int)-valor(tupla); U2 - Tuplas
+    8: (242, 177, 121),                                             # U2 - Dicionários: par chave(int)-valor(tupla); U2 - Tuplas
+    16: (245, 149, 99),                                             # U2 - Dicionários: par chave(int)-valor(tupla); U2 - Tuplas
+    32: (246, 124, 95),                                             # U2 - Dicionários: par chave(int)-valor(tupla); U2 - Tuplas
+    64: (246, 94, 59),                                              # U2 - Dicionários: par chave(int)-valor(tupla); U2 - Tuplas
+    128: (237, 207, 114),                                           # U2 - Dicionários: par chave(int)-valor(tupla); U2 - Tuplas
+    256: (237, 204, 97),                                            # U2 - Dicionários: par chave(int)-valor(tupla); U2 - Tuplas
+    512: (237, 200, 80),                                            # U2 - Dicionários: par chave(int)-valor(tupla); U2 - Tuplas
+    1024: (237, 197, 63),                                           # U2 - Dicionários: par chave(int)-valor(tupla); U2 - Tuplas
+    2048: (237, 194, 46)                                            # U2 - Dicionários: par chave(int)-valor(tupla); U2 - Tuplas
+}
+
+pygame.init()                                                       # U3 - Estudo de caso (PyGame): inicializando todos os módulos do pygame
+
 
 #---------------------------------------------------------------------------------------------------------------------
 # Tamanhos das fontes dos números. Números maiores precisam ter uma fonte menor para caberem dentro da célula
@@ -71,23 +89,6 @@ janela = pygame.display.set_mode((LARGURA_JANELA, ALTURA_JANELA))   # U3 - Estud
 pygame.display.set_caption(NOME_DO_JOGO)                            # U3 - Estudo de caso (PyGame): definindo título da janela
 clock = pygame.time.Clock()                                         # U3 - Estudo de caso (PyGame): criando objeto de controle de FPS
 
-#------------------------------------------------------------------------------------------------------------------------------
-# Dicionário que mapeia os valores das peças para suas cores correspondentes, com um valor padrão para peças maiores que 2048 
-#------------------------------------------------------------------------------------------------------------------------------
-CORES_CELULAS = {                                                   # U2 - Estruturas de dados: dicionários: Dicionários: par chave(int)-valor(tupla)
-    0: (205, 192, 180),                                             # U2 - Tuplas
-    2: (238, 228, 218),                                             # U2 - Tuplas
-    4: (237, 224, 200),                                             # U2 - Tuplas
-    8: (242, 177, 121),                                             # U2 - Tuplas
-    16: (245, 149, 99),                                             # U2 - Tuplas
-    32: (246, 124, 95),                                             # U2 - Tuplas
-    64: (246, 94, 59),                                              # U2 - Tuplas
-    128: (237, 207, 114),                                           # U2 - Tuplas
-    256: (237, 204, 97),                                            # U2 - Tuplas
-    512: (237, 200, 80),                                            # U2 - Tuplas
-    1024: (237, 197, 63),                                           # U2 - Tuplas
-    2048: (237, 194, 46)                                            # U2 - Tuplas
-}
 
 #---------------------------------------------
 # Função para desenhar o tabuleiro estático
@@ -106,7 +107,7 @@ def desenhar_jogo():                                                # U3 - Funç
     # Calcula a posição do tabuleiro para centralizá-lo na tela
     #---------------------------------------------------------------
     tabuleiro_top = MARGEM_TOPO                                                                                       # U1 - Variáveis e atribuições
-    tabuleiro_left = (LARGURA_JANELA - (TAMANHO_GRADE * TAMANHO_CELULA + (TAMANHO_GRADE - 1) * BORDA_CELULA)) // 2    # U1 - Expressões aritméticas: calculando margem horizontal 
+    tabuleiro_left = (LARGURA_JANELA - (TAMANHO_GRADE * TAMANHO_CELULA + (TAMANHO_GRADE - 1) * BORDA_CELULA)) // 2    # U1 - Expressões: calculando margem horizontal 
     
     #------------------------------------------------------------------------------------------
     # Desenha o fundo do tabuleiro, criando um retângulo maior para dar um efeito de borda
@@ -115,10 +116,10 @@ def desenhar_jogo():                                                # U3 - Funç
         janela,                                                                                                 # U3 - Estudo de caso (PyGame): referência à superfície da janela
         COR_DE_FUNDO,                                                                                           # U3 - Estudo de caso (PyGame): cor do retângulo; U1 - Variáveis
         (
-            tabuleiro_left - 5,                                                                                 # U1 - Expressões aritméticas: calculando posição x
-            tabuleiro_top - 5,                                                                                  # U1 - Expressões aritméticas: calculando posição y                                             
-            TAMANHO_GRADE * TAMANHO_CELULA + (TAMANHO_GRADE - 1) * BORDA_CELULA + 10,                           # U1 - Expressões aritméticas: calculando largura           
-            TAMANHO_GRADE * TAMANHO_CELULA + (TAMANHO_GRADE - 1) * BORDA_CELULA + 10                            # U1 - Expressões aritméticas: calculando altura
+            tabuleiro_left - 5,                                                                                 # U1 - Expressões: calculando posição x
+            tabuleiro_top - 5,                                                                                  # U1 - Expressões: calculando posição y                                             
+            TAMANHO_GRADE * TAMANHO_CELULA + (TAMANHO_GRADE - 1) * BORDA_CELULA + 10,                           # U1 - Expressões: calculando largura           
+            TAMANHO_GRADE * TAMANHO_CELULA + (TAMANHO_GRADE - 1) * BORDA_CELULA + 10                            # U1 - Expressões: calculando altura
          )
     )
     
@@ -129,16 +130,16 @@ def desenhar_jogo():                                                # U3 - Funç
     #------------------------------------------------------------------------
     for i in range(TAMANHO_GRADE):                                                                              # U2 - Estruturas de controle: for: iterando sobre linhas
         for j in range(TAMANHO_GRADE):                                                                          # U2 - Estruturas de controle: for aninhado: iterando sobre colunas
-            x = tabuleiro_left + j * (TAMANHO_CELULA + BORDA_CELULA)                                            # U1 - Variáveis e atribuições / Expressões aritméticas: posição x da célula
-            y = tabuleiro_top + i * (TAMANHO_CELULA + BORDA_CELULA)                                             # U1 - Variáveis e atribuições / Expressões aritméticas: posição y da célula
+            x = tabuleiro_left + j * (TAMANHO_CELULA + BORDA_CELULA)                                            # U1 - Variáveis e atribuições / Expressões: posição x da célula
+            y = tabuleiro_top + i * (TAMANHO_CELULA + BORDA_CELULA)                                             # U1 - Variáveis e atribuições / Expressões: posição y da célula
             
 
             #---------------------------------------------------------------------------------
             # Condicionais para segurança caso o usuário coloque um valor fora da matriz
             #---------------------------------------------------------------------------------
-            if i < len(TABULEIRO_TESTE) and j < len(TABULEIRO_TESTE[i]):                                        # U1 - Estruturas de controle: if-else:
+            if i < len(TABULEIRO_TESTE) and j < len(TABULEIRO_TESTE[i]):                                        # U1 - Estruturas de controle: if com operadores lógicos e relacionais
                 valor = TABULEIRO_TESTE[i][j]                                                                   # U1 - Variáveis e atribuições
-            else:                                                                                               # U1 - Estruturas de controle: if-else:
+            else:                                                                                               # U1 - Estruturas de controle: else
                 valor = 0                                                                                       # U1 - Variáveis e atribuições
             
             
@@ -147,7 +148,7 @@ def desenhar_jogo():                                                # U3 - Funç
             # usando o dicionário CORES_CELULAS 
             # (com um valor padrão para peças maiores que 2048)
             #------------------------------------------------------
-            color = CORES_CELULAS.get(valor, CORES_CELULAS[2048])                                               # U2 - Dicionários: método .get() com valor padrão
+            color = CORES_CELULAS.get(valor, CORES_CELULAS[2048])                                               # U2 - Estruturas de dados: dicionários: método .get()
             
             #------------------------------------------------------
             # Desenha o retângulo da peça com a cor correspondente
@@ -164,7 +165,7 @@ def desenhar_jogo():                                                # U3 - Funç
                     texto = FONTE_GRANDE.render(str(valor), True, COR_DO_TEXTO)                                 # U3 - Estudo de caso (PyGame): renderizando número como texto
                 elif valor < 1024:                                                                              # U1 - Estruturas de controle: elif
                     texto = FONTE_MEDIA.render(str(valor), True, COR_DO_TEXTO)                                  # U3 - Estudo de caso (PyGame): renderizando com fonte média
-                else:
+                else:                                                                                           # U1 - Estruturas de controle: else
                     texto = FONTE_PEQUENA.render(str(valor), True, TEXT0_CLARO)                                 # U3 - Estudo de caso (PyGame): renderizando com fonte pequena
                 
                 texto_rect = texto.get_rect(center=(x + TAMANHO_CELULA // 2, y + TAMANHO_CELULA // 2))          # U3 - Estudo de caso (PyGame): centralizando texto na célula; U1 - Expressões
@@ -174,7 +175,7 @@ def desenhar_jogo():                                                # U3 - Funç
     #------------------------------------------------------
     # Exibe instruções na parte inferior da tela
     #------------------------------------------------------
-    legenda = FONTE_PEQUENA.render("Modo U1 - Altere as variáveis no código", True, (150, 150, 150))    # U3 - Estudo de caso (PyGame): renderizando instrução; U1 - Strings
+    legenda = FONTE_PEQUENA.render("Modo U1 - Altere as variáveis no código", True, (150, 150, 150))            # U3 - Estudo de caso (PyGame): renderizando instrução; U1 - Strings
     
     
     #---------------------------------------------
@@ -192,12 +193,12 @@ def desenhar_jogo():                                                # U3 - Funç
 #---------------------------------------------------------------------------------
 running = True                                                                                                  # U1 - Variáveis e atribuições; U1 - Tipos de dados: booleanos
 while running:                                                                                                  # U2 - Estruturas de controle: while: loop principal do jogo
-    for event in pygame.event.get():                                                                            # U3 - PyGame; U2 - Estruturas de controle: for: percorrendo eventos do pygame
+    for event in pygame.event.get():                                                                            # U2 - Estruturas de controle: for: percorrendo eventos do pygame; U3 - Estudo de caso (PyGame)
         if event.type == pygame.QUIT:                                                                           # U1 - Estruturas de controle: if: verificando evento de fechar janela
             running = False                                                                                     # U1 - Variáveis e atribuições; U1 - Tipos de dados: booleanos
             
     desenhar_jogo()                                                                                             # U3 - Funções: chamada de função
     clock.tick(10)                                                                                              # U3 - Estudo de caso (PyGame): limitando FPS; U1 - Tipos de dados: números
 
-pygame.quit()                                                                                                   # U3 - Estudo de caso (PyGame)
-sys.exit()                                                                                                      # U3 - Biblioteca padrão
+pygame.quit()                                                                                                   # U3 - Estudo de caso (PyGame): encerrando todos os módulos do pygame
+sys.exit()                                                                                                      # U3 - Biblioteca padrão: encerrando o processo Python
