@@ -27,7 +27,7 @@ MARGEM_TOPO = 80                                                    # U1 - Vari�
 #---------------------------------------------------------------------------------------------------
 COR_DE_FUNDO = (187, 173, 160)                                      # U1 - Variáveis e atribuições: cor de fundo do tabuleiro
 COR_DO_TEXTO = (119, 110, 101)                                      # U1 - Variáveis e atribuições: cor dos números baixos e título
-TEXT0_CLARO = (249, 246, 242)                                       # U1 - Variáveis e atribuições: cor dos números altos
+TEXTO_CLARO = (249, 246, 242)                                       # U1 - Variáveis e atribuições: cor dos números altos
 
 #-----------------------------------------------
 # Texto do Título (Tipo de Dado: String)
@@ -91,7 +91,7 @@ CORES_CELULAS = {                 # U2 - Estruturas de dados: dicionários: mape
 def comprimir(linha):                                                       # U3 - Funções: definição com parâmetro e retorno
     
     #----------------------------------------------------------
-    # Remove zeros colcando os números no inicio da linha
+    # Remove zeros, colocando os números no inicio da linha
     #------------------------------------------------------
     nova_linha = [x for x in linha if x != 0]                               # U2 - Estruturas de dados: listas: Compreensão
     
@@ -191,7 +191,7 @@ def mover_cima(estado_de_jogo):                                             # U3
             coluna_original.append(tabuleiro[i][j])                         # U1 - Tipos de dados: listas: montando coluna a partir do tabuleiro
 
         #--------------------------------------------------------------
-        # Criando uma cópia da coluna para comparação posterior
+        # Guardando estado original da coluna para verificar se houve movimento
         #------------------------------------------------------------
         coluna = coluna_original                                            # U1 - Variáveis e atribuições
 
@@ -314,7 +314,7 @@ def adicionar_celula(tabuleiro):                                            # U3
 
         #---------------------------------------------------------------------------------------------------------------------------------------
         # A função random.choice é usada para escolher aleatoriamente um item do array [2, 2, 2, 2, 4] para ser adicionado ao tabuleiro
-        # 2 aparece quatro vezes no array para que a probabiliade de escolher 2 seja quatro vezes maior do que escolher 4
+        # 2 aparece quatro vezes no array para que a probabilidade de escolher 2 seja quatro vezes maior do que escolher 4
         #-------------------------------------------------------------------------------------------------------------------------------
         tabuleiro[i][j] = random.choice([2, 2, 2, 2, 4])                    # U3 - Biblioteca padrão: random.choice; U1 - Listas e atribuição
 
@@ -411,7 +411,7 @@ def desenhar_jogo(estado_de_jogo):                                          # U3
                 elif valor < 1024:                                                      # U1 - Estruturas de controle: elif
                     texto = FONTE_MEDIA.render(str(valor), True, COR_DO_TEXTO)          # U3 - Estudo de caso (PyGame): renderizando com fonte média
                 else:                                                                   # U1 - Estruturas de controle: else
-                    texto = FONTE_PEQUENA.render(str(valor), True, TEXT0_CLARO)         # U3 - Estudo de caso (PyGame): renderizando com fonte pequena
+                    texto = FONTE_PEQUENA.render(str(valor), True, TEXTO_CLARO)         # U3 - Estudo de caso (PyGame): renderizando com fonte pequena
 
                 texto_rect = texto.get_rect(
                     center=(x + TAMANHO_CELULA // 2, y + TAMANHO_CELULA // 2)           # U3 - Estudo de caso (PyGame): centralizando texto na célula; U1 - Expressões
@@ -430,7 +430,7 @@ def desenhar_jogo(estado_de_jogo):                                          # U3
     ]
 
     #---------------------------------------------
-    # Funções que escrevem as intruções na tela
+    # Funções que escrevem as instruções na tela
     #----------------------------------------
     janela.blit(legenda[0], (tabuleiro_left, ALTURA_JANELA - 75))                       # U3 - Estudo de caso (PyGame): desenhando legenda; U1 - Listas: acesso por índice
     janela.blit(legenda[1], (tabuleiro_left, ALTURA_JANELA - 50))                       # U3 - Estudo de caso (PyGame): desenhando legenda; U1 - Listas: acesso por índice
